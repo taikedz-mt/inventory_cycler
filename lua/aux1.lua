@@ -36,7 +36,6 @@ local function player_is_cycling(player)
     if pcon["aux1"] then -- Holding E
         -- Player is stationary
         -- TODO develop better heuristic
-        minetest.debug("Player might be cycling")
         return not (pcon.up or pcon.down or pcon.left or pcon.right)
     end
 
@@ -61,7 +60,7 @@ minetest.register_chatcommand("icycler", {
             return
         end
 
-        minetest.chat_send_player("Invalid request - see /help icycler")
+        minetest.chat_send_player(playername, "Invalid request - see /help icycler")
     end,
 })
 
@@ -90,7 +89,7 @@ minetest.register_globalstep(function(dtime)
             player_timers[playername].timer = 0
 
             if player_is_cycling(player) then
-                inventory_cycler:upward(minetest.get_inventory({type='player', name = player:get_player_name()}))
+                inventory_cycler:upward(player:get_player_name())
             end
         end
     end

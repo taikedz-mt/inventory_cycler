@@ -31,7 +31,7 @@ or
 * Left-click move rows upward.
     * The active (top) row becomes the bottom row, and each other row is moved up
     * Items in slot 1 of each row do not get moved
-* Right-click to move rows downward
+* Right-click or dro (`Q`) to move rows downward
 * Hold `E` to cycle through rows repeatedly
     * Only when stationary
     * iCycler must be first item in inventory

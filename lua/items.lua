@@ -1,20 +1,22 @@
+local image="default_glass.png^default_stick.png^default_sapling.png" -- TODO make a custom texture
 
-local function get_player_inventory(player)
-    minetest.get_inventory({type = "player", name = player:get_player_name()})
-end
-
-local function set_player_inventory(player, inventory)
-end
+local function cycleback(itemstack, user, extra)
+        if user:get_wield_index() == 1 then
+            inventory_cycler:downward(user:get_player_name())
+        end
+    end
 
 minetest.register_craftitem("inventory_cycler:icycler", {
     description = "Inventory Cycler",
-    inventory_texture = "default_glass.png^default_stick.png^default_sapling.png", -- TODO make a custom texture
+    inventory_image = image,
+    stack_max = 1,
     on_use = function(itemstack, user, pointedthing)
-        inventory_cycler:upward(get_player_inventory(user) )
+        if user:get_wield_index() == 1 then
+            inventory_cycler:upward(user:get_player_name())
+        end
     end,
-    on_place = function(itemstack, user, pointedthing) -- FIXME check API
-        inventory_cycler:downward(get_player_inventory(user) )
-    end,
+    on_place = cycleback, -- only works if pointing at a node!
+    on_drop = cycleback,
 })
 
 minetest.register_craft({
