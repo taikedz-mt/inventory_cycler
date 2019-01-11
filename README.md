@@ -16,6 +16,13 @@ o = group:stone - any stone
 [t] [ ] [ ]
 [ ] [a] [ ]
 [ ] [ ] [o]
+
+or
+
+[ ] [ ] [t]
+[ ] [a] [ ]
+[t] [ ] [ ]
+
 ```
 
 ## Use
@@ -25,7 +32,10 @@ o = group:stone - any stone
     * The active (top) row becomes the bottom row, and each other row is moved up
     * Items in slot 1 of each row do not get moved
 * Right-click to move rows downward
-* Hold `E` to cycle continuously through rows continuously
+* Hold `E` to cycle through rows repeatedly
+    * Only when stationary
+    * iCycler must be first item in inventory
     * By default, every 0.7 second
     * configurable period through `/icycler period <N>`
+    * configured per player
 

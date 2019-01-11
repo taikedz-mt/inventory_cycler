@@ -12,12 +12,21 @@ local function register_items(downward, upward)
         end,
     })
 
-    minetest.register_craftrecipe({
+    minetest.register_craft({
         output = "inventory_cycler:icycler",
         recipe = {
             {"group:tree", "", ""},
             {"", "group:sand", ""},
             {"", "", "group:stone"},
+        }
+    })
+
+    minetest.register_craft({
+        output = "inventory_cycler:icycler",
+        recipe = {
+            {"", "", "group:tree"},
+            {"", "group:sand", ""},
+            {"group:stone", "", ""},
         }
     })
 end
