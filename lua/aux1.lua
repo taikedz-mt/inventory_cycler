@@ -10,14 +10,14 @@ When user is holding the aux1 key (E):
 local ifuncs = {}
 local global_timer = 0
 local player_timers = {}
-local global_cycle_interval = tonumber(minetest.settings:get("icycle.default_global_cycle_interval")) or 0.2
-local default_player_interval = tonumber(minetest.settings:get("icycle.default_player_cycle_interval")) or 0.7
+local global_cycle_interval = tonumber(minetest.settings:get("inventory_cycler.default_global_cycle_interval")) or 0.2
+local default_player_interval = tonumber(minetest.settings:get("inventory_cycler.default_player_cycle_interval")) or 0.7
 
 local function player_is_cycling(player)
     local pcon = player:get_player_controls()
     local pinv = player:get_player_inventory()
 
-    if not (pinv[1] and pinv[1].name == "icycle:icycler") then
+    if not (pinv[1] and pinv[1].name == "inventory_cycler:icycler") then
         return false
     end
     
@@ -36,8 +36,8 @@ minetest.register_player_onleave(function(player)
     player_timers[playername] = nil
 end)
 
-minetest.register_chatcommand("icycle", {
-    description = "Configure icycler",
+minetest.register_chatcommand("icycler", {
+    description = "Configure inventory cycler",
     params = "period <N>",
     func = function(playername, params)
         params = params:split(" ")
@@ -49,7 +49,7 @@ minetest.register_chatcommand("icycle", {
             return
         end
 
-        minetest.chat_send_player("Invalid request - see /help icycle")
+        minetest.chat_send_player("Invalid request - see /help icycler")
     end,
 })
 

@@ -1,10 +1,10 @@
-icycle = {name="icycle", version="0.1"}
+-- All file variabels local. Do not pollute the global space. Keep your environment clean!
 
-ifuncs = dofile(minetest.get_modpath("icycle").."lua/cycle.lua")
+local ifuncs = dofile(minetest.get_modpath("inventory_cycler").."lua/cycle.lua")
 
-items = dofile(minetest.get_modpath("icycle").."lua/items.lua")
+local items = dofile(minetest.get_modpath("inventory_cycler").."lua/items.lua")
 items.initialize(ifuncs)
 
-aux1 = dofile(minetest.get_modpath("icycle").."lua/aux1.lua")
+local aux1 = dofile(minetest.get_modpath("inventory_cycler").."lua/aux1.lua")
 aux1.initialize(ifuncs)
 

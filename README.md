@@ -6,7 +6,7 @@ Cycles rows of inventory upwards/downwards into the top row - access different l
 
 ## Item
 
-The inventory cycling tool ("iCycler") can be made by combining three block types, in a diagonal pattern:
+The inventory cycling tool can be made by combining three block types, in a diagonal pattern:
 
 ```
 t = group:tree - any tree trunk
@@ -27,5 +27,5 @@ o = group:stone - any stone
 * Right-click to move rows downward
 * Hold `E` to cycle continuously through rows continuously
     * By default, every 0.7 second
-    * configurable period through `/icycle period <N>`
+    * configurable period through `/icycler period <N>`
 

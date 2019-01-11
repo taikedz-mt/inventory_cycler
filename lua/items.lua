@@ -1,5 +1,5 @@
 local function register_items(downward, upward)
-    minetest.register_craftitem("icycle:icycler", {
+    minetest.register_craftitem("inventory_cycler:icycler", {
         description = "Inventory Cycler",
         textures = {"default_glass.png^default_stick.png^default_sapling.png"}, -- TODO make a custom texture
         on_use = function(itemstack, user, pointedthing) -- FIXME check API
@@ -13,7 +13,7 @@ local function register_items(downward, upward)
     })
 
     minetest.register_craftrecipe({
-        output = "icycler:icycle",
+        output = "inventory_cycler:icycler",
         recipe = {
             {"group:tree", "", ""},
             {"", "group:sand", ""},
