@@ -1,12 +1,8 @@
--- Exportable functions
-
-local funcs = {}
-
-funcs.updward = function(playerinventory)
+function inventory_cycler:upward(playerinventory)
     -- TODO implement
 end
 
-funcs.downward = function(playerinventory)
+function inventory_cycler:downward(playerinventory)
     -- TODO implement
 end
 
@@ -19,5 +15,3 @@ end
 local function set_row(rowindex, playerinventory, rowdata)
     -- TODO implement
 end
-
-return funcs
