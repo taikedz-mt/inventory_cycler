@@ -39,3 +39,9 @@ or
 
 ```
 
+## License
+
+* Code: (C) 2019 Tai "DuCake" Kedzierski
+    * Provided un der the terms of the LGPLv3
+* Media: (C) 2019 Tai "DuCake" Kedzierski
+    * Provided under the terms of CC-BY-SA-4.0
