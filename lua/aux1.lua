@@ -1,6 +1,6 @@
 --[[
 When user is holding the aux1 key (E):
-* if icycler is in position 1
+* if player is sneaking
 * and if user is not walking
 * then
     * start cycling their inventory (position 1 requirement also allows for sprinting without cycling)
@@ -10,33 +10,17 @@ When user is holding the aux1 key (E):
 local global_timer = 0
 local player_timers = {}
 local global_cycle_interval = tonumber(minetest.settings:get("inventory_cycler.default_global_cycle_interval")) or 0.2
-local default_player_interval = tonumber(minetest.settings:get("inventory_cycler.default_player_cycle_interval")) or 0.7
-
-local function i_get(inventory, idx)
-    return inventory:get_stack("main", idx)
-end
-
-local function i_set(inventory, idx, itemstack)
-    return inventory:set_stack("main", idx, itemstack)
-end
-
-local function i_name(inventory, idx)
-    local istack = i_get(inventory, idx)
-    return istack:get_name()
-end
+local default_player_interval = tonumber(minetest.settings:get("inventory_cycler.default_player_cycle_interval")) or 0.4
 
 local function player_is_cycling(player)
     local pcon = player:get_player_control()
     local pinv = minetest.get_inventory({type='player', name = player:get_player_name()})
-
-    if not (i_name(pinv, 1) == "inventory_cycler:icycler") then
-        return false
-    end
     
     if pcon["aux1"] then -- Holding E
-        -- Player is stationary
-        -- TODO develop better heuristic
-        return not (pcon.up or pcon.down or pcon.left or pcon.right)
+        return (
+            not (pcon.up or pcon.down or pcon.left or pcon.right) -- stationary
+            and pcon.sneak -- sneaking
+        )
     end
 
     return false

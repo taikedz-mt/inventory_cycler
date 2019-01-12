@@ -10,10 +10,10 @@ local function inventory_copy(playerinventory)
     return new_t
 end
 
-local function apply_inventory(playerinventory, new_inv)
+local function apply_inventory(playerinventory, new_inv, exclude)
     for i = 1,4 do
         for j = 1,8 do
-            if (j-1) % 8 ~= 0 then
+            if j ~= exclude then
                 local entry = ((i-1)*8+j)
                 playerinventory:set_stack("main", entry, new_inv[i][j])
             end
@@ -21,7 +21,7 @@ local function apply_inventory(playerinventory, new_inv)
     end
 end
 
-local function inventory_move(playername, direction)
+local function inventory_move(playername, direction, exclude)
     local inv_ref = minetest.get_inventory({type="player", name=playername})
     local inv_copy = inventory_copy(inv_ref)
     local shifted_t = {}
@@ -31,13 +31,13 @@ local function inventory_move(playername, direction)
         shifted_t[newpos] = inv_copy[i+1]
     end
 
-    apply_inventory(inv_ref, shifted_t)
+    apply_inventory(inv_ref, shifted_t, exclude)
 end
 
-function inventory_cycler:upward(playername)
-    inventory_move(playername, -1)
+function inventory_cycler:upward(playername, exclude)
+    inventory_move(playername, -1, exclude)
 end
 
-function inventory_cycler:downward(playername)
-    inventory_move(playername, 1)
+function inventory_cycler:downward(playername, exclude)
+    inventory_move(playername, 1, exclude)
 end

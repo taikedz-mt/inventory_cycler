@@ -1,19 +1,13 @@
-local image="default_glass.png^default_stick.png^default_sapling.png" -- TODO make a custom texture
-
 local function cycleback(itemstack, user, extra)
-        if user:get_wield_index() == 1 then
-            inventory_cycler:downward(user:get_player_name())
-        end
-    end
+    inventory_cycler:downward(user:get_player_name(), user:get_wield_index())
+end
 
 minetest.register_craftitem("inventory_cycler:icycler", {
     description = "Inventory Cycler",
-    inventory_image = image,
+    inventory_image = "inventory_cycler_icycler.png",
     stack_max = 1,
     on_use = function(itemstack, user, pointedthing)
-        if user:get_wield_index() == 1 then
-            inventory_cycler:upward(user:get_player_name())
-        end
+        inventory_cycler:downward(user:get_player_name(), user:get_wield_index())
     end,
     on_place = cycleback, -- only works if pointing at a node!
     on_drop = cycleback,

@@ -1,10 +1,24 @@
 # Inventory cycle for Minetest
 
-Item to cycle through rows of inventory
+Mechanism and item to cycle through rows of inventory.
 
 Cycles rows of inventory upwards/downwards into the top row - access different lines of your inventory without opening the inventory screen!
 
+## Use
+
+* Hold both the sprint and sneak buttons (typically `E` and `Shift`) to cycle through rows repeatedly
+    * Only when stationary
+    * By default, every 0.4 second
+        * configurable per player via `/icycler period <N>`
+
 ## Item
+
+You can also craft and use a cycling tool to explicitly cycle through rows on-click. It is more precise than the keypress based method (which can be affected by lag), but requires to change wielded item to use.
+
+* Left-click move rows upward.
+    * The active (top) row becomes the bottom row, and each other row is moved up
+    * Items in the same column as the cycler tool do not get moved
+* Right-click when pointing at a node, or drop (`Q`), to move rows downward
 
 The inventory cycling tool can be made by combining three block types, in a diagonal pattern:
 
@@ -24,18 +38,4 @@ or
 [t] [ ] [ ]
 
 ```
-
-## Use
-
-* The item must be in active inventory slot 1, the leftmost slot
-* Left-click move rows upward.
-    * The active (top) row becomes the bottom row, and each other row is moved up
-    * Items in slot 1 of each row do not get moved
-* Right-click or dro (`Q`) to move rows downward
-* Hold `E` to cycle through rows repeatedly
-    * Only when stationary
-    * iCycler must be first item in inventory
-    * By default, every 0.7 second
-    * configurable period through `/icycler period <N>`
-    * configured per player
 
