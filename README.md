@@ -4,6 +4,8 @@ Mechanism and item to cycle through rows of inventory.
 
 Cycles rows of inventory upwards/downwards into the top row - access different lines of your inventory without opening the inventory screen!
 
+![cycle your inventory](readmepics/inventory_cycler.gif)
+
 ## Use
 
 * Hold both the sprint and sneak buttons (typically `E` and `Shift`) to cycle through rows repeatedly
