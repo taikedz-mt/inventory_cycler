@@ -1,0 +1,3 @@
+inventory_cycler.default_global_cycle_interval (Global cycle interval) string 0.2
+inventory_cycler.default_player_cycle_interval (Player inventory cycle invterval) string 0.4
+inventory_cycler.must_stand_still (Must stand still to cycle) bool true

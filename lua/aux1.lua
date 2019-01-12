@@ -11,6 +11,9 @@ local global_timer = 0
 local player_timers = {}
 local global_cycle_interval = tonumber(minetest.settings:get("inventory_cycler.default_global_cycle_interval")) or 0.2
 local default_player_interval = tonumber(minetest.settings:get("inventory_cycler.default_player_cycle_interval")) or 0.4
+local must_stand_still = tonumber(minetest.settings:get("inventory_cycler.must_stand_still")) ~= false
+
+must_stand_still = false
 
 local function player_is_cycling(player)
     local pcon = player:get_player_control()
@@ -18,7 +21,10 @@ local function player_is_cycling(player)
     
     if pcon["aux1"] then -- Holding E
         return (
-            not (pcon.up or pcon.down or pcon.left or pcon.right) -- stationary
+            not (
+                must_stand_still 
+                and not (pcon.up or pcon.down or pcon.left or pcon.right) -- stationary
+            )
             and pcon.sneak -- sneaking
         )
     end

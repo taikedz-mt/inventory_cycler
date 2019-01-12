@@ -41,6 +41,12 @@ or
 
 ```
 
+## Settings
+
+* `inventory_cycler.default_player_cycle_interval` Player inventory cycle invterval (how fast, in seconds, to switch through rows) - default `0.4`
+* `inventory_cycler.must_stand_still` - whether the player must stand still to cycle, or if can be moving at the same time - default `true`
+* `inventory_cycler.default_global_cycle_interval` - Global step interval (performance related, player cycle interval should be a multiple of this) - default `0.2`
+
 ## License
 
 * Code: (C) 2019 Tai "DuCake" Kedzierski
