@@ -3,33 +3,46 @@ When user is holding the aux1 key (E):
 * if player is sneaking
 * and if user is not walking
 * then
-    * start cycling their inventory (position 1 requirement also allows for sprinting without cycling)
+    * start cycling their inventory
     * at their personally configured speed
 --]]
 
 local global_timer = 0
 local player_timers = {}
 local global_cycle_interval = tonumber(minetest.settings:get("inventory_cycler.default_global_cycle_interval")) or 0.2
-local default_player_interval = tonumber(minetest.settings:get("inventory_cycler.default_player_cycle_interval")) or 0.4
+local default_player_interval = tonumber(minetest.settings:get("inventory_cycler.default_player_cycle_interval")) or 0.8
 local must_stand_still = tonumber(minetest.settings:get("inventory_cycler.must_stand_still")) ~= false
 
-must_stand_still = false
+local required_controls = minetest.settings:get("inventory.cycler.required_controls") or "aux1,sneak"
+local forbidden_controls = minetest.settings:get("inventory.cycler.forbidden_controls") or "up,down,left,right"
 
-local function player_is_cycling(player)
+required_controls = required_controls:split(",")
+forbidden_controls = forbidden_controls:split(",")
+
+local function holding_all_of(player, controls)
     local pcon = player:get_player_control()
-    local pinv = minetest.get_inventory({type='player', name = player:get_player_name()})
-    
-    if pcon["aux1"] then -- Holding E
-        return (
-            not (
-                must_stand_still 
-                and not (pcon.up or pcon.down or pcon.left or pcon.right) -- stationary
-            )
-            and pcon.sneak -- sneaking
-        )
+
+    for _,c in ipairs(controls) do
+        if not pcon[c] then return false end
     end
 
-    return false
+    return true
+end
+
+local function holding_none_of(player, controls)
+    local pcon = player:get_player_control()
+
+    for _,c in ipairs(controls) do
+        if pcon[c] then return false end
+    end
+
+    return true
+end
+
+local function player_is_cycling(player)
+    local pinv = minetest.get_inventory({type='player', name = player:get_player_name()})
+
+    return holding_all_of(player, required_controls) and holding_none_of(player, forbidden_controls)
 end
 
 minetest.register_on_leaveplayer(function(player)
@@ -55,12 +68,8 @@ minetest.register_chatcommand("icycler", {
 })
 
 minetest.register_globalstep(function(dtime)
-    local cumul_dtime
     global_timer = global_timer + dtime
-    if global_timer > global_cycle_interval then
-        cumul_dtime = global_timer
-        global_timer = 0
-    else
+    if global_timer < global_cycle_interval then
         return
     end
 
@@ -69,18 +78,24 @@ minetest.register_globalstep(function(dtime)
     for _,player in ipairs(all_players) do
         local playername = player:get_player_name()
 
-        if player_timers[playername] == nil then
-            player_timers[playername] = {timer=0, interval=default_player_interval}
-        end
+        if player_is_cycling(player) then
 
-        player_timers[playername].timer = player_timers[playername].timer + cumul_dtime
+            player_timers[playername].timer = player_timers[playername].timer + global_timer
 
-        if player_timers[playername].timer > player_timers[playername].interval then
+            if player_timers[playername].timer < player_timers[playername].interval then
+                return
+            end
             player_timers[playername].timer = 0
 
-            if player_is_cycling(player) then
-                inventory_cycler:upward(player:get_player_name())
+            inventory_cycler:upward(player:get_player_name())
+        else
+            if player_timers[playername] == nil then
+                player_timers[playername] = {timer=0, interval=default_player_interval}
             end
+
+            player_timers[playername].timer = 0
         end
     end
+
+    global_timer = 0
 end)

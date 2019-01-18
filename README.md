@@ -10,8 +10,9 @@ Cycles rows of inventory upwards/downwards into the top row - access different l
 
 * Hold both the sprint and sneak buttons (typically `E` and `Shift`) to cycle through rows repeatedly
     * Only when stationary
-    * By default, every 0.4 second
+    * By default, every 0.8 second
         * configurable per player via `/icycler period <N>`
+    * The key combination can be changed in server configuration, see settings below
 
 ## Item
 
@@ -43,9 +44,11 @@ or
 
 ## Settings
 
-* `inventory_cycler.default_player_cycle_interval` Player inventory cycle invterval (how fast, in seconds, to switch through rows) - default `0.4`
+* `inventory_cycler.default_player_cycle_interval` Player inventory cycle invterval (how fast, in seconds, to switch through rows) - default `0.8`
 * `inventory_cycler.must_stand_still` - whether the player must stand still to cycle, or if can be moving at the same time - default `true`
 * `inventory_cycler.default_global_cycle_interval` - Global step interval (performance related, player cycle interval should be a multiple of this) - default `0.2`
+* `inventory.cycler.required_controls` - controls that must be held to trigger cycling, default `aux1,sneak` which are typically `E` and `<Shift>`
+* `inventory.cycler.forbidden_controls` - controls of which none should be helo, if cycling is intended. Default is `up,down,left,right`
 
 ## License
 
