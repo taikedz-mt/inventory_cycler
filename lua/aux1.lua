@@ -9,12 +9,12 @@ When user is holding the aux1 key (E):
 
 local global_timer = 0
 local player_timers = {}
-local global_cycle_interval = tonumber(minetest.settings:get("inventory_cycler.default_global_cycle_interval")) or 0.2
-local default_player_interval = tonumber(minetest.settings:get("inventory_cycler.default_player_cycle_interval")) or 0.8
+local global_cycle_interval = tonumber(minetest.settings:get("inventory_cycler.default_global_cycle_interval")) or 0.5
+local default_player_interval = tonumber(minetest.settings:get("inventory_cycler.default_player_cycle_interval")) or 1
 local must_stand_still = tonumber(minetest.settings:get("inventory_cycler.must_stand_still")) ~= false
 
 local required_controls = minetest.settings:get("inventory.cycler.required_controls") or "aux1,sneak"
-local forbidden_controls = minetest.settings:get("inventory.cycler.forbidden_controls") or "up,down,left,right"
+local forbidden_controls = minetest.settings:get("inventory.cycler.forbidden_controls") or ""
 
 required_controls = required_controls:split(",")
 forbidden_controls = forbidden_controls:split(",")
@@ -79,6 +79,12 @@ minetest.register_globalstep(function(dtime)
         local playername = player:get_player_name()
 
         if player_is_cycling(player) then
+            if player_timers[playername].timer == 0 then
+                -- Get it before incrementing the timer up from zero
+                -- So that a quick "tap" of required key combo
+                --   activates the cycling
+                inventory_cycler:upward(player:get_player_name())
+            end
 
             player_timers[playername].timer = player_timers[playername].timer + global_timer
 
@@ -86,8 +92,6 @@ minetest.register_globalstep(function(dtime)
                 return
             end
             player_timers[playername].timer = 0
-
-            inventory_cycler:upward(player:get_player_name())
         else
             if player_timers[playername] == nil then
                 player_timers[playername] = {timer=0, interval=default_player_interval}
